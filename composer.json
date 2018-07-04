@@ -1,0 +1,13 @@
+{
+    "name": "rentloop/google-geo-code",
+    "description": "A Google Geo location API wrapper",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Tyler Jefford",
+            "email": "tyler@rentloop.co"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
