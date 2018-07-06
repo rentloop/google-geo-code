@@ -7,14 +7,32 @@ use GuzzleHttp\Client;
 class Lookup
 {
 
-  public function locate($address)
+  /**
+   * Fetch data about given address, city and state from Google's Geocode API.
+   *
+   * @param String address  Address of location to search for. |REQUIRED|
+   * @param String city  City of location address is located  |OPTIONAL|
+   * @param String state  State which city and address are located  |OPTIONAL|
+   *
+   * @return Array  Location Data provided by Google
+   */
+  public function locate($address, $city = null, $state = null)
   {
-    return $this->buildData($address);
+    return $this->buildData($address, $city, $state);
   }
 
-  public function buildData($address)
+  /**
+   * Puts together array of data after being fetched.
+   *
+   * @param String address  Address of location to search for. |REQUIRED|
+   * @param String city  City of location address is located  |OPTIONAL|
+   * @param String state  State which city and address are located  |OPTIONAL|
+   *
+   * @return Array data  Data collected from google
+   */
+  public function buildData($address, $city, $state)
   {
-    $response  = $this->fetchLocation($address);
+    $response  = $this->fetchLocation($address, $city, $state);
 
     $results   = get_object_vars($response->results[0]);
     $address   = $this->parseAddress($results['address_components']);
@@ -37,9 +55,22 @@ class Lookup
     return $data;
   }
 
-  public function fetchLocation($address)
+  /**
+   * Calls the API through Guzzle and fetches location data based on
+   * the inputs (address, city, state).
+   *
+   * @param String address  Address of location to search for. |REQUIRED|
+   * @param String city  City of location address is located  |OPTIONAL|
+   * @param String state  State which city and address are located  |OPTIONAL|
+   *
+   * @return Object response  Google GeoCode API response
+   */
+  public function fetchLocation($address, $city, $state)
   {
-    $uri = 'https://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'+Chicago+IL&key='. env('GOOGLE_GEOCODE_KEY');
+    $uri = 'https://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'+'.
+                                                                         urlencode($city) .'+'.
+                                                                         urlencode($state) .
+                                                                         '&key='. env('GOOGLE_GEOCODE_KEY');
     $client = new Client();
 
     $response = json_decode($client->get( $uri )->getBody());
@@ -52,6 +83,14 @@ class Lookup
     return $response;
   }
 
+  /**
+   * Takes address componetes and makes the data more readable by
+   * parsing the vars into objects
+   *
+   * @param Array components  Address componets from the Google GeoCode API
+   *
+   * @return Array address_components
+   */
   public function parseAddress($components)
   {
     $address_components = [];
@@ -62,6 +101,14 @@ class Lookup
     return $address_components;
   }
 
+  /**
+   * Takes geometry data and makes the data more readable by
+   * parsing the vars into objects
+   *
+   * @param Object location  geometry data from the Google GeoCode API
+   *
+   * @return Array location
+   */
   public function parseGeometry($location)
   {
     return $location->location;
