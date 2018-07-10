@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 class Lookup
 {
 
+  // TODO: Add guzzle as a dependency of this project
+
   /**
    * Fetch data about given address, city and state from Google's Geocode API.
    *
@@ -30,7 +32,7 @@ class Lookup
    *
    * @return Array data  Data collected from google
    */
-  public function buildData($address, $city, $state)
+  private function buildData($address, $city, $state)
   {
     $response  = $this->fetchLocation($address, $city, $state);
 
@@ -65,7 +67,7 @@ class Lookup
    *
    * @return Object response  Google GeoCode API response
    */
-  public function fetchLocation($address, $city, $state)
+  private function fetchLocation($address, $city, $state)
   {
     $uri = 'https://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'+'.
                                                                          urlencode($city) .'+'.
@@ -91,7 +93,7 @@ class Lookup
    *
    * @return Array address_components
    */
-  public function parseAddress($components)
+  private function parseAddress($components)
   {
     $address_components = [];
     foreach($components as $k => $object){
@@ -109,7 +111,7 @@ class Lookup
    *
    * @return Array location
    */
-  public function parseGeometry($location)
+  private function parseGeometry($location)
   {
     return $location->location;
   }
