@@ -8,7 +8,7 @@
             "email": "tyler@rentloop.co"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "dev-master",
     "require": {
       "guzzlehttp/guzzle": "~6.0"
     }
