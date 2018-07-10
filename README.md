@@ -24,6 +24,13 @@ In Laravel 5.5 the service provider will automatically get registered. In older 
 ];
 ```
 
+### Environment
+This package uses an environment key to pull a secret API token from your `.env` file. You will need to get a API key from [Google Geocode API](https://developers.google.com/maps/documentation/geocoding/start) and put that key in your environment file as:
+
+```
+GOOGLE_GEOCODE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
 ## Usage
 Using the lookup is very simple. All you need to provide is the address, city and state (for better accuracy). You will then be returned an array of data about that location from google.
 

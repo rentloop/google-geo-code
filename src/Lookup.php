@@ -6,9 +6,6 @@ use GuzzleHttp\Client;
 
 class Lookup
 {
-
-  // TODO: Add guzzle as a dependency of this project
-
   /**
    * Fetch data about given address, city and state from Google's Geocode API.
    *
