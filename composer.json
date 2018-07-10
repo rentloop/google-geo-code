@@ -1,6 +1,8 @@
 {
     "name": "rentloop/google-geo-code",
     "description": "A Google Geo location API wrapper",
+    "homepage": "https://github.com/rentloop/google-geo-code",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
@@ -11,5 +13,10 @@
     "minimum-stability": "dev",
     "require": {
       "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
     }
 }
