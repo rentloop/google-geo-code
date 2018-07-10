@@ -20,21 +20,29 @@ class Lookup
    */
   public function locate($address, $city = null, $state = null)
   {
-    return $this->buildData($address, $city, $state);
+    try {
+      $response = $this->fetchLocation($address, $city, $state);
+
+      return $this->buildData($response);
+    } catch (\Exception $e) {
+      report($e);
+
+      abort(500, 'Error processing location');
+    }
   }
 
   /**
    * Puts together array of data after being fetched.
    *
-   * @param String address  Address of location to search for. |REQUIRED|
-   * @param String city  City of location address is located  |OPTIONAL|
-   * @param String state  State which city and address are located  |OPTIONAL|
+   * @param Object response  response from fetchLocation method
    *
    * @return Array data  Data collected from google
    */
-  private function buildData($address, $city, $state)
+  private function buildData($response)
   {
-    $response  = $this->fetchLocation($address, $city, $state);
+    if(!is_object($response)){
+      throw new \Exception('Geocode: Error processing Google repsonse');
+    }
 
     $results   = get_object_vars($response->results[0]);
     $address   = $this->parseAddress($results['address_components']);
@@ -69,17 +77,20 @@ class Lookup
    */
   private function fetchLocation($address, $city, $state)
   {
+
+    if(empty($address)){
+      throw new \Exception('Geocode: Missing Address on locate method');
+    }
+
     $uri = 'https://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'+'.
                                                                          urlencode($city) .'+'.
                                                                          urlencode($state) .
                                                                          '&key='. env('GOOGLE_GEOCODE_KEY');
     $client = new Client();
-
     $response = json_decode($client->get( $uri )->getBody());
 
-    // TODO: Send an error to the log
     if($response->status != 'OK'){
-      return 'ERROR';
+      throw new \Exception("Geocode: Google returned a status that is not OK \n\n $response->status");
     }
 
     return $response;
