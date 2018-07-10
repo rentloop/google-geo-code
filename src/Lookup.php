@@ -48,7 +48,7 @@ class Lookup
     $data['formatted_address'] = $results['formatted_address'];
     $data['place_id']          = $results['place_id'];
 
-    $data['neighborhood']      = $address['neighborhood']['long_name'];
+    $data['neighborhood']      = $this->parseNeighborhood($address);
     $data['address']           = $address['street_number']['long_name'].' '. $address['route']['long_name'];
     $data['city']              = $address['locality']['long_name'];
     $data['state']             = $address['administrative_area_level_1']['long_name'];
@@ -122,6 +122,26 @@ class Lookup
   private function parseGeometry($location)
   {
     return $location->location;
+  }
+
+  /**
+   * Takes the address component to generate some kind of neighborhood if
+   * the neighborhood attribute doesnt exist on the google data.
+   *
+   * @param Array adderess  address data from google
+   *
+   * @return String neighborhood
+   */
+  private function parseNeighborhood($address)
+  {
+    if(isset($address['neighborhood'])){
+      return $address['neighborhood']['long_name'];
+    }
+    if(isset($address['administrative_area_level_3'])){
+      return $address['administrative_area_level_3']['long_name'];
+    }
+
+    return $address['locality']['long_name'];
   }
 
 }
