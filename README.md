@@ -1,5 +1,5 @@
 # Google Geocode Wrapper
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+A small package to use google's geocode look up of an address.
 
 ## Installation
 This package has been tested on Laravel 5.4 and up.
@@ -7,7 +7,7 @@ This package has been tested on Laravel 5.4 and up.
 You can install the package via composer:
 
 ```
-composer require rentloop/google-geo-code
+composer require tjefford/google-geo-code
 ```
 
 In Laravel 5.5 the service provider will automatically get registered. In older versions of the framework just add the service provider and facade in config/app.php file:
@@ -15,12 +15,12 @@ In Laravel 5.5 the service provider will automatically get registered. In older 
 ```php
 'providers' => [
     // ...
-    Rentloop\GoogleGeoCode\GoogleGeoCodeServiceProvider::class,
+    Tjefford\GoogleGeoCode\GoogleGeoCodeServiceProvider::class,
 ];
 
 'aliases' => [
     // ...
-    'Lookup' => Rentloop\GoogleGeoCode\Facades\Lookup::class,
+    'Lookup' => Tjefford\GoogleGeoCode\Facades\Lookup::class,
 ];
 ```
 
@@ -36,7 +36,7 @@ Using the lookup is very simple. All you need to provide is the address, city an
 
 Include the Lookup class in your file.
 ```php
-use Rentloop\GoogleGeoCode\Lookup;
+use Tjefford\GoogleGeoCode\Lookup;
 ```
 
 Initiate the class and then call the locate method.

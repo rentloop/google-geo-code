@@ -1,6 +1,6 @@
 <?php
 
-namespace Rentloop\GoogleGeoCode\Facades;
+namespace Tjefford\GoogleGeoCode\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rentloop\GoogleGeoCode;
+namespace Tjefford\GoogleGeoCode;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +23,6 @@ class GoogleGeoCodeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('Rentloop\GoogleGeoCode\Lookup');
+        $this->app->make('Tjefford\GoogleGeoCode\Lookup');
     }
 }
