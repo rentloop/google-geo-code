@@ -1,6 +1,6 @@
 <?php
 
-namespace Rentloop\GoogleGeoCode;
+namespace Tjefford\GoogleGeoCode;
 
 use GuzzleHttp\Client;
 
@@ -84,7 +84,7 @@ class Lookup
                                                                          urlencode($state) .
                                                                          '&key='. env('GOOGLE_GEOCODE_KEY');
     $client = new Client();
-    $response = json_decode($client->get( $uri )->getBody());
+    $response = json_decode($client->get($uri)->getBody());
 
     if($response->status != 'OK'){
       throw new \Exception("Geocode: Google returned a status that is not OK \n\n $response->status");
